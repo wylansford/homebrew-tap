@@ -1,8 +1,8 @@
 class TerminalChinese < Formula
-  desc "Learn Chinese vocabulary in your terminal — FSRS spaced repetition"
+  desc "Learn Chinese vocabulary in your terminal - FSRS spaced repetition"
   homepage "https://github.com/wylansford/terminal-chinese"
-  url "https://github.com/wylansford/terminal-chinese/archive/refs/tags/v1.1.1.tar.gz"
-  sha256 "7e41f8226822398ebb3406ccf80a65ad1a3c3a262b80e53f94cffc5dd2307c31"
+  url "https://github.com/wylansford/terminal-chinese/archive/refs/tags/v1.1.2.tar.gz"
+  sha256 "54a54e732b0859cd907d5b22602b3bef873a68ceb7d540305b6d913fcd0f443b"
   license "MIT"
 
   depends_on "python@3.13"
@@ -22,8 +22,7 @@ class TerminalChinese < Formula
     <<~EOS
       Add to your ~/.zshrc (or ~/.bashrc):
         alias ct=terminal-chinese
-        if [[ -o interactive && -t 0 && $SHLVL -eq 1 && "$TERM_PROGRAM" != "vscode" \\
-              && -z "$TERMINAL_CHINESE_DISABLE" ]]; then
+        if [[ -o interactive && -t 0 && $SHLVL -eq 1 && -z "$TERMINAL_CHINESE_DISABLE" ]]; then
             terminal-chinese review
         fi
 
@@ -31,7 +30,7 @@ class TerminalChinese < Formula
       name, not an absolute path -- brew keeps it on PATH across upgrades,
       so nothing goes stale when the version bumps.
 
-      Then open a new terminal — HSK 1-6 vocabulary (~5,700 words) imports
+      Then open a new terminal - HSK 1-6 vocabulary (~5,700 words) imports
       automatically, starting on HSK 1 (widen anytime: ct config --hsk 1,2,3).
     EOS
   end
