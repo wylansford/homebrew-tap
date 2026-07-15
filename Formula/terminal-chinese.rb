@@ -1,8 +1,8 @@
 class TerminalChinese < Formula
   desc "Learn Chinese vocabulary in your terminal — FSRS spaced repetition"
   homepage "https://github.com/wylansford/terminal-chinese"
-  url "https://github.com/wylansford/terminal-chinese/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "9d49fa50dd8ec4d33267a801e5e7f0fe0db829244e734f1b1ef8db2cd1c0d16b"
+  url "https://github.com/wylansford/terminal-chinese/archive/refs/tags/v1.1.1.tar.gz"
+  sha256 "7e41f8226822398ebb3406ccf80a65ad1a3c3a262b80e53f94cffc5dd2307c31"
   license "MIT"
 
   depends_on "python@3.13"
@@ -20,8 +20,16 @@ class TerminalChinese < Formula
 
   def caveats
     <<~EOS
-      Add to your ~/.zshrc (or ~/.bashrc with `init bash`):
-        eval "$(terminal-chinese init zsh)"
+      Add to your ~/.zshrc (or ~/.bashrc):
+        alias ct=terminal-chinese
+        if [[ -o interactive && -t 0 && $SHLVL -eq 1 && "$TERM_PROGRAM" != "vscode" \\
+              && -z "$TERMINAL_CHINESE_DISABLE" ]]; then
+            terminal-chinese review
+        fi
+
+      (bash: swap `-o interactive` for `$- == *i*`.) Uses the bare command
+      name, not an absolute path -- brew keeps it on PATH across upgrades,
+      so nothing goes stale when the version bumps.
 
       Then open a new terminal — HSK 1-6 vocabulary (~5,700 words) imports
       automatically, starting on HSK 1 (widen anytime: ct config --hsk 1,2,3).
@@ -29,6 +37,10 @@ class TerminalChinese < Formula
   end
 
   test do
-    assert_match "alias ct=", shell_output("#{bin}/terminal-chinese init zsh")
+    # TERMINAL_CHINESE_BIN must be honored -- without it, init would bake in
+    # the internal venv script path instead of the wrapper, silently
+    # bypassing the venv (see bin/terminal-chinese's cmd_init).
+    out = shell_output("TERMINAL_CHINESE_BIN=#{bin}/terminal-chinese #{bin}/terminal-chinese init zsh")
+    assert_match "alias ct=#{bin}/terminal-chinese", out
   end
 end
