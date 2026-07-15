@@ -1,8 +1,8 @@
 class TerminalChinese < Formula
   desc "Learn Chinese vocabulary in your terminal - FSRS spaced repetition"
   homepage "https://github.com/wylansford/terminal-chinese"
-  url "https://github.com/wylansford/terminal-chinese/archive/refs/tags/v1.1.2.tar.gz"
-  sha256 "54a54e732b0859cd907d5b22602b3bef873a68ceb7d540305b6d913fcd0f443b"
+  url "https://github.com/wylansford/terminal-chinese/archive/refs/tags/v1.1.3.tar.gz"
+  sha256 "8ff44dad1112c68b5c723da9b07f01831f0943be46d5b6dfaf449cc34d5f854d"
   license "MIT"
 
   depends_on "python@3.13"
